@@ -5,13 +5,13 @@ node {
      sh "git rev-parse --short HEAD > .git/commit-id"                        
      commit_id = readFile('.git/commit-id').trim()
    }
-   stage('test') {
+   stage('Test') {
      nodejs(nodeJSInstallationName: 'nodejs') {
        sh 'npm install --only=dev'
        sh 'npm test'
      }
    }
-   stage('docker build/push') {
+   stage('Docker Build/Push') {
    withCredentials([usernamePassword(credentialsId: 'e7f69ed2-c6b8-4482-8d74-3377e2c94223', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
        sh ' docker build -t aminechiba/nodejs-app-pipeline:latest .'
        sh ' docker login -u $USERNAME -p $PASSWORD '
