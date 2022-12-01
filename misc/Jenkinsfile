@@ -12,6 +12,6 @@ node {
      }
    }
    stage('docker build/push') {
-       def app = docker.build("aminechiba/docker-nodejs-demo:${commit_id}", '.').push()
+       def app = docker.build("docker.io/aminechiba/docker-nodejs-demo:${commit_id}", '.').push()
    }
 }
