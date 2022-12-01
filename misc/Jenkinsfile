@@ -15,4 +15,5 @@ node {
         withDockerRegistry([ credentialsId: "e7f69ed2-c6b8-4482-8d74-3377e2c94223", url: "" ]) {
         bat "docker push aminechiba/NodeJsPipeline:build"
         }
+	}
 }
