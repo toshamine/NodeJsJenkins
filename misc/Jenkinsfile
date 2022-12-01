@@ -12,7 +12,7 @@ node {
      }
    }
    stage('docker build/push') {
-   withCredentials([usernamePassword(credentialsId: 'Docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+   withCredentials([usernamePassword(credentialsId: 'e7f69ed2-c6b8-4482-8d74-3377e2c94223', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
        sh ' docker build -t aminechiba/nodejs-app-pipeline:latest .'
        sh ' docker login -u $USERNAME -p $PASSWORD '
 	   sh ' docker push aminechiba/nodejs-app-pipeline '
