@@ -13,6 +13,6 @@ node {
    }
    stage('docker build/push') {
        sh ' docker login -u aminechiba -p ban2020.amine '
-	   sh ' docker push aminechiba/NodeJsApp '
+	   sh ' docker push aminechiba/nodejs-app-pipeline '
    }
 }
