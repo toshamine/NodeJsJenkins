@@ -12,6 +12,7 @@ node {
      }
    }
    stage('docker build/push') {
+       sh ' docker image build -t aminechiba/nodejs-app-pipeline:${commit_id} .'
        sh ' docker login -u aminechiba -p ban2020.amine '
 	   sh ' docker push aminechiba/nodejs-app-pipeline '
    }
