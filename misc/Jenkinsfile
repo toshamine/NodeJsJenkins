@@ -1,4 +1,9 @@
 node {
+   def to = emailextrecipients([
+          [$class: 'CulpritsRecipientProvider'],
+          [$class: 'DevelopersRecipientProvider'],
+          [$class: 'RequesterRecipientProvider']
+   ])
    def commit_id
    stage('Preparation') {
      checkout scm
@@ -13,11 +18,25 @@ node {
    }
    stage('Docker Build/Push') {
    withCredentials([usernamePassword(credentialsId: 'e7f69ed2-c6b8-4482-8d74-3377e2c94223', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-       sh ' docker build -t aminechiba/nodejs-app-pipeline:latest .'
+       sh ' docker build -t aminechiba/nodejs-app-pipeline:$commit_id .'
        sh ' docker login -u $USERNAME -p $PASSWORD '
 	   sh ' docker push aminechiba/nodejs-app-pipeline '
+	   
+	   
 
       }
        
+   }
+   stage('Sending Result With Email') {
+    // set variables
+    def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${currentBuild.result}"
+    def content = '${JELLY_SCRIPT,template="html"}'
+
+    // send email
+    if(to != null && !to.isEmpty()) {
+      emailext(body: content, mimeType: 'text/html',
+         replyTo: '$DEFAULT_REPLYTO', subject: subject,
+         to: to, attachLog: true )
+    }
    }
 }
