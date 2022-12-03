@@ -29,7 +29,6 @@ node {
    }
    stage('Sending Result With Email') {
     // set variables
-	currentBuild.result = "SUCCESS";
     def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${currentBuild.result}"
     def content = '${JELLY_SCRIPT,template="html"}'
 
